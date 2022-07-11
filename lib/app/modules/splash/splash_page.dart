@@ -13,7 +13,7 @@ class SplashPage extends StatelessWidget {
     final ThemesUI theme = ThemesUI();
 
     return GetBuilder<SplashController>(
-      builder: (_) => SafeArea(
+      builder: (controller) => SafeArea(
         child: Scaffold(
             body: Container(
           width:double.infinity,

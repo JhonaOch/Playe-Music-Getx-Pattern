@@ -3,7 +3,6 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
-
 import 'package:on_audio_query/on_audio_query.dart';
 
 class PlayerControlller extends GetxController {
@@ -47,20 +46,12 @@ class PlayerControlller extends GetxController {
       _position = p;
       update();
     });
-
-
-  
   }
 
   void chagePositionSlider(int seconds, AudioPlayer data) async {
-
     Duration duration = Duration(seconds: seconds);
     await data.seek(duration);
     update();
-
-    
-
-   
   }
 
   void pause(AudioPlayer data) async {
@@ -79,7 +70,6 @@ class PlayerControlller extends GetxController {
     }
   }
 
-
   Future<void> getTracks() async {
     listSongs = await audio.querySongs(
       sortType: null,
@@ -94,53 +84,64 @@ class PlayerControlller extends GetxController {
   }
 
   void next(BuildContext context, AudioPlayer play, SongModel i) async {
-    for (var element in listSongs) {
-      if (i.id == element.id) {
-        try {
-          var url = listSongs[_i + 1].uri.toString();
-          _song = listSongs[_i + 1];
-          _i = _i + 1;
-          await setAudio(url, play);
-          update();
-        } catch (e) {
-          mostrarAwesonSnackbar(
-              context,
-              "Error :O",
-              "The format music is not support.\n Automatic play the next song",
-              ContentType.warning);
-          var url = listSongs[_i + 1].uri.toString();
-          _song = listSongs[_i + 1];
-          _i = _i + 1;
-          await setAudio(url, play);
-          update();
+    if (listSongs.length - 1 > _i) {
+      for (var element in listSongs) {
+        if (i.id == element.id) {
+          try {
+            var url = listSongs[_i + 1].uri.toString();
+            _song = listSongs[_i + 1];
+            _i = _i + 1;
+            await setAudio(url, play);
+            update();
+          } catch (e) {
+            mostrarAwesonSnackbar(
+                context,
+                "Error :O",
+                "The format music is not support.\n Automatic play the next song",
+                ContentType.warning);
+
+            var url = listSongs[_i + 1].uri.toString();
+
+            _song = listSongs[_i + 1];
+            _i = _i + 1;
+            await setAudio(url, play);
+            update();
+          }
         }
       }
+    } else {
+      print("Nivel de return");
     }
   }
 
-
-    void previus(BuildContext context, AudioPlayer play, SongModel i) async {
-    for (var element in listSongs) {
-      if (i.id == element.id) {
-        try {
-          var url = listSongs[_i - 1].uri.toString();
-          _song = listSongs[_i - 1];
-          _i = _i - 1;
-          await setAudio(url, play);
-          update();
-        } catch (e) {
-          mostrarAwesonSnackbar(
-              context,
-              "Error :O",
-              "The format music is not support.\n Automatic play the next song",
-              ContentType.warning);
-          var url = listSongs[_i - 1].uri.toString();
-          _song = listSongs[_i - 1];
-          _i = _i - 1;
-          await setAudio(url, play);
-          update();
+  void previus(BuildContext context, AudioPlayer play, SongModel i) async {
+    final number = _i - 1;
+    if (number != -1) {
+      print("ENTRO");
+      for (var element in listSongs) {
+        if (i.id == element.id) {
+          try {
+            var url = listSongs[_i - 1].uri.toString();
+            _song = listSongs[_i - 1];
+            _i = _i - 1;
+            await setAudio(url, play);
+            update();
+          } catch (e) {
+            mostrarAwesonSnackbar(
+                context,
+                "Error :O",
+                "The format music is not support.\n Automatic play the next song",
+                ContentType.warning);
+            var url = listSongs[_i - 1].uri.toString();
+            _song = listSongs[_i - 1];
+            _i = _i - 1;
+            await setAudio(url, play);
+            update();
+          }
         }
       }
+    } else {
+      print("Nivel de return");
     }
   }
 

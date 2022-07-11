@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:app_music_flutter/app/data/models/storage.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class LocalStorage {
+  // ignore: constant_identifier_names
   static const KEY = "session";
 
   final FlutterSecureStorage _storage = const FlutterSecureStorage();

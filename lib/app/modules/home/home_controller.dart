@@ -1,5 +1,3 @@
-
-
 import 'package:app_music_flutter/app/data/repositories/local/storage_repository.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
@@ -18,14 +16,21 @@ class HomeController extends GetxController {
   List<SongModel> songs = [];
 
   get validator => _validator;
+  get canciones => songs;
 
   @override
-  void onReady() async{
+  void onInit() {
+    super.onInit();
+    getTracks();
+  }
+
+  @override
+  void onReady() async {
     super.onReady();
     await checkPermissions();
   }
 
-    //Permision the storage app 
+  //Permision the storage app
   Future<void> checkPermissions() async {
     if (await status.request().isDenied) {
       _validator = false.toString();
@@ -51,20 +56,16 @@ class HomeController extends GetxController {
 
   //Uri the song and play the song
   Future<void> setAudio(String url) async {
-      await player.setAudioSource(
-        AudioSource.uri(Uri.parse(
-          url)));
-      await player.play();
-      update();
+    await player.setAudioSource(AudioSource.uri(Uri.parse(url)));
+    await player.play();
+    update();
   }
 
 //Send arguments to Page Player
   Future<void> play(index) async {
-       Get.toNamed(AppRoute.PLAYER,arguments:{
-        "index":songs[index],
-        "player":player,
-        "i":index
-       });
-       update();
+    print("INDEX: $index");
+    Get.toNamed(AppRoute.PLAYER,
+        arguments: {"index": songs[index], "player": player, "i": index});
+    update();
   }
 }

@@ -48,6 +48,9 @@ dependencies:
   on_audio_query: ^2.6.1
   # Reproductor de musica
   just_audio: ^0.9.20
+  # Drawer
+  flutter_slider_drawer: ^2.1.1
+
 
 
 dev_dependencies:
@@ -77,8 +80,6 @@ flutter:
   assets:
     - assets/gifs/
     - assets/imgs/
-    - assets/svg/
-    - assets/music/
     - assets/
   #   - images/a_dot_ham.jpeg
 

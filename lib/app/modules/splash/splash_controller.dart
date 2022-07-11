@@ -5,11 +5,14 @@ import 'package:get/get.dart';
 
 class SplashController extends GetxController {
   StorageRepository local = StorageRepository();
+  
 
   @override
   void onReady() {
     super.onReady();
+  
     getData();
+  
   }
 
   //Get data the local storage
